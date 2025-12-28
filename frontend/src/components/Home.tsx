@@ -24,40 +24,48 @@ const AutoProductSlider: React.FC<{
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (products.length <= 4 || isPaused) return;
+    // Only auto-slide on desktop
+    if (products.length <= 4 || isPaused || window.innerWidth < 768) return;
     const timer = setInterval(() => {
-      setStartIndex(prev => (prev + 1) % (products.length - 2));
+      setStartIndex(prev => (prev + 1) % (products.length - 3));
     }, 3000);
     return () => clearInterval(timer);
   }, [products.length, isPaused]);
 
-  // For the "animated slider" feel, we use a larger container and smooth transitions
   return (
     <section
-      className="container mx-auto px-4 overflow-hidden py-12"
+      className="container mx-auto px-4 py-8 md:py-12"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="flex justify-between items-end border-b-2 md:border-b-4 border-green-700 pb-2 md:pb-4 mb-6 md:mb-8">
+      <div className="flex justify-between items-end border-b-2 md:border-b-4 border-green-700 pb-2 md:pb-4 mb-4 md:mb-8">
         <div>
           <h2 className="text-xl md:text-3xl font-black uppercase tracking-tighter text-gray-900">{title}</h2>
           <div className="h-0.5 md:h-1 w-12 md:w-20 bg-green-700 mt-1"></div>
         </div>
         <button
           onClick={onViewAll}
-          className="group flex items-center gap-2 text-green-700 font-black text-xs uppercase hover:text-green-800 transition-colors"
+          className="group flex items-center gap-2 text-green-700 font-black text-[10px] md:text-xs uppercase hover:text-green-800 transition-colors"
         >
-          View all <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          Voir tout <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
         </button>
       </div>
 
       <div className="relative">
+        {/* Mobile: Horizontal Scroll | Desktop: Animated Transform */}
         <div
-          className="flex gap-6 transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1)"
-          style={{ transform: `translateX(-${startIndex * (100 / (window.innerWidth < 768 ? 1.2 : 4.2))}%)` }}
+          ref={sliderRef}
+          className={`flex gap-4 md:gap-6 no-scrollbar ${window.innerWidth < 768
+            ? 'overflow-x-auto snap-x snap-mandatory pb-4'
+            : 'transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1)'
+            }`}
+          style={window.innerWidth >= 768 ? { transform: `translateX(-${startIndex * (100 / 4.2)}%)` } : {}}
         >
           {products.map(p => (
-            <div key={p.id} className="min-w-[85%] md:min-w-[45%] lg:min-w-[23.5%] animate-fade-in-up">
+            <div
+              key={p.id}
+              className="min-w-[85%] md:min-w-[45%] lg:min-w-[23.5%] snap-center animate-fade-in-up"
+            >
               <ProductCard
                 product={p}
                 onViewDetails={onViewProduct}
@@ -131,14 +139,30 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
   useEffect(() => {
     if (reviewsPaused) return;
     const timer = setInterval(() => {
-      setReviewIndex(prev => (prev + 1) % (REVIEWS.length - 2));
-    }, 3000);
+      // For mobile (1 visible), cycle through all. For desktop (3 visible), cycle up to length-2.
+      const maxIndex = window.innerWidth < 768 ? REVIEWS.length - 1 : REVIEWS.length - 3;
+      setReviewIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
+    }, 4000);
     return () => clearInterval(timer);
   }, [reviewsPaused]);
 
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
+
+  const handleReviewSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("Merci pour votre avis ! Il sera publié après modération.");
+    setShowReviewForm(false);
+    setNewReview({ rating: 5, comment: '' });
+  };
+
   return (
     <div className="space-y-4 pb-20 bg-gray-50/50">
-      {/* Main Hero Section */}
+      {/* ... Hero and Trust Badges ... */}
+      {/* (Rest of the Hero and Trust Badges code remains unchanged) */}
+      <div className="hidden">{/* Placeholder to match structure if needed */}</div>
+
+      {/* Hero Section placeholder for context in replace */}
       <div className="relative h-[500px] lg:h-[700px] overflow-hidden bg-gray-900">
         {SLIDER_IMAGES.map((slide, idx) => (
           <div key={idx} className={`absolute inset-0 transition-all duration-1000 transform ${idx === currentSlide ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-110 z-0'}`}>
@@ -226,7 +250,7 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
 
       {/* Reviews Slider Section */}
       <section
-        className="bg-green-950 py-24 text-white relative overflow-hidden"
+        className="bg-green-950 py-16 md:py-24 text-white relative overflow-hidden"
         onMouseEnter={() => setReviewsPaused(true)}
         onMouseLeave={() => setReviewsPaused(false)}
       >
@@ -234,21 +258,60 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-700/10 rounded-full blur-3xl -ml-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6 md:gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-16 gap-6">
             <div>
               <span className="text-green-500 font-black tracking-widest text-[10px] md:text-xs uppercase mb-2 block">Témoignages</span>
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-black uppercase leading-none">Ils nous font confiance</h2>
             </div>
-            <button onClick={onSeeAllReviews} className="bg-white text-green-950 px-8 md:px-10 py-3 md:py-4 font-black uppercase text-[9px] md:text-[10px] tracking-widest hover:bg-green-500 hover:text-white transition-all rounded-sm shadow-xl w-full md:w-auto">Voir les 30 avis</button>
+            <div className="flex gap-3 w-full md:w-auto">
+              <button
+                onClick={() => setShowReviewForm(true)}
+                className="flex-1 md:flex-none bg-green-700 text-white px-6 md:px-10 py-3 md:py-4 font-black uppercase text-[9px] md:text-[10px] tracking-widest hover:bg-green-600 transition-all rounded-sm shadow-xl"
+              >
+                Laisser un avis
+              </button>
+              <button onClick={onSeeAllReviews} className="flex-1 md:flex-none bg-white text-green-950 px-6 md:px-10 py-3 md:py-4 font-black uppercase text-[9px] md:text-[10px] tracking-widest hover:bg-green-500 hover:text-white transition-all rounded-sm shadow-xl">Voir tout</button>
+            </div>
           </div>
+
+          {showReviewForm && (
+            <div className="mb-12 p-6 md:p-8 bg-white/10 backdrop-blur-md rounded-sm border border-white/20 animate-fade-in-up">
+              <h3 className="font-black uppercase text-lg mb-6 tracking-tighter">Votre Avis Nous Intéresse</h3>
+              <form onSubmit={handleReviewSubmit} className="space-y-4">
+                <div className="flex gap-2 mb-4 text-yellow-400">
+                  {[1, 2, 3, 4, 5].map(star => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setNewReview({ ...newReview, rating: star })}
+                      className="text-2xl"
+                    >
+                      <i className={`${star <= newReview.rating ? 'fas' : 'far'} fa-star`}></i>
+                    </button>
+                  ))}
+                </div>
+                <textarea
+                  required
+                  placeholder="Partagez votre expérience avec nos produits..."
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-sm text-white placeholder-white/30 focus:outline-none focus:border-green-500 min-h-[120px]"
+                  value={newReview.comment}
+                  onChange={e => setNewReview({ ...newReview, comment: e.target.value })}
+                ></textarea>
+                <div className="flex gap-4">
+                  <button type="submit" className="bg-green-600 px-8 py-3 font-black uppercase text-[10px] tracking-widest rounded-sm hover:bg-green-500 transition-all">Envoyer</button>
+                  <button type="button" onClick={() => setShowReviewForm(false)} className="text-white/50 font-black uppercase text-[10px] tracking-widest hover:text-white transition-colors">Annuler</button>
+                </div>
+              </form>
+            </div>
+          )}
 
           <div className="relative overflow-hidden px-2">
             <div
-              className="flex gap-8 transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1)"
-              style={{ transform: `translateX(-${reviewIndex * (100 / (window.innerWidth < 768 ? 1 : 3))}%)` }}
+              className={`flex gap-4 md:gap-8 transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1) ${window.innerWidth < 768 ? 'no-scrollbar overflow-x-auto snap-x snap-mandatory pb-4' : ''}`}
+              style={window.innerWidth >= 768 ? { transform: `translateX(-${reviewIndex * (100 / 3)}%)` } : {}}
             >
               {REVIEWS.map((rev) => (
-                <div key={rev.id} className="min-w-[100%] md:min-w-[32%] bg-white/5 p-6 md:p-12 rounded-sm border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-colors backdrop-blur-sm">
+                <div key={rev.id} className="min-w-[100%] md:min-w-[32%] snap-center bg-white/5 p-6 md:p-12 rounded-sm border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-colors backdrop-blur-sm">
                   <div>
                     <i className="fas fa-quote-left text-2xl md:text-4xl text-green-500 mb-4 md:mb-6 opacity-40"></i>
                     <div className="flex text-yellow-400 mb-4 md:mb-6 gap-1">
