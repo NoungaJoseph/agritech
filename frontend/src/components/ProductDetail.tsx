@@ -25,11 +25,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
 
   return (
     <div className="bg-white rounded-lg shadow-sm border p-6">
-      <button 
+      <button
         onClick={onBack}
         className="mb-6 flex items-center gap-2 text-gray-500 hover:text-green-700 transition font-bold text-sm"
       >
-        <i className="fas fa-arrow-left"></i> BACK TO RESULTS
+        <i className="fas fa-arrow-left"></i> RETOUR AUX RÉSULTATS
       </button>
 
       <div className="grid md:grid-cols-2 gap-12">
@@ -63,36 +63,35 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
                 <i key={i} className={`fas fa-star ${i < 4 ? 'text-yellow-400' : 'text-gray-200'}`}></i>
               ))}
             </div>
-            <span className="text-sm text-gray-500 underline cursor-pointer">{product.reviewCount} Reviews</span>
+            <span className="text-sm text-gray-500 underline cursor-pointer">{product.reviewCount} Avis</span>
           </div>
 
           <div className="py-4 border-y">
             <div className="flex items-end gap-3">
-              <span className="text-4xl font-bold text-green-700">£{product.price.toFixed(2)}</span>
+              <span className="text-4xl font-black text-green-700">{product.price.toLocaleString()} <span className="text-base">FCFA</span></span>
               {product.originalPrice && (
-                <span className="text-lg text-gray-400 line-through mb-1">
-                  £{product.originalPrice.toFixed(2)}
+                <span className="text-lg text-gray-300 line-through mb-1 font-bold">
+                  {product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
-            <p className="text-xs text-gray-500 mt-1 italic">*Prices include VAT where applicable</p>
+            <p className="text-xs text-gray-400 mt-1 italic">*TVA incluse le cas échéant</p>
           </div>
 
           <div className="space-y-4">
             {/* Fix: Render size selection only if sizes exist. */}
             {product.sizes && product.sizes.length > 0 && (
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Select Size</label>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Choisir Poids / Format</label>
                 <div className="flex flex-wrap gap-2">
                   {product.sizes.map(size => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`min-w-[48px] h-10 border rounded flex items-center justify-center font-bold text-sm transition ${
-                        selectedSize === size 
-                          ? 'bg-green-700 text-white border-green-700' 
+                      className={`min-w-[48px] h-10 border rounded flex items-center justify-center font-bold text-sm transition ${selectedSize === size
+                          ? 'bg-green-700 text-white border-green-700'
                           : 'bg-white text-gray-700 hover:border-green-700'
-                      }`}
+                        }`}
                     >
                       {size}
                     </button>
@@ -104,17 +103,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
             {/* Fix: Render color selection only if colors exist. */}
             {product.colors && product.colors.length > 0 && (
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Select Color</label>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Choisir Variété</label>
                 <div className="flex flex-wrap gap-2">
                   {product.colors.map(color => (
                     <button
                       key={color}
                       onClick={() => setSelectedColor(color)}
-                      className={`px-4 h-10 border rounded flex items-center justify-center font-bold text-sm transition ${
-                        selectedColor === color 
-                          ? 'bg-green-700 text-white border-green-700' 
+                      className={`px-4 h-10 border rounded flex items-center justify-center font-bold text-sm transition ${selectedColor === color
+                          ? 'bg-green-700 text-white border-green-700'
                           : 'bg-white text-gray-700 hover:border-green-700'
-                      }`}
+                        }`}
                     >
                       {color}
                     </button>
@@ -125,37 +123,37 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
 
             <div className="flex gap-4 pt-4">
               <div className="flex items-center border rounded h-12">
-                <button 
+                <button
                   onClick={() => setQuantity(q => Math.max(1, q - 1))}
                   className="px-4 py-2 hover:bg-gray-100 h-full"
                 >
                   -
                 </button>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   value={quantity}
                   readOnly
                   className="w-12 text-center font-bold focus:outline-none"
                 />
-                <button 
+                <button
                   onClick={() => setQuantity(q => q + 1)}
                   className="px-4 py-2 hover:bg-gray-100 h-full"
                 >
                   +
                 </button>
               </div>
-              <button 
+              <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-green-700 text-white font-bold rounded h-12 flex items-center justify-center gap-2 hover:bg-green-800 transition shadow-lg"
+                className="flex-1 bg-green-700 text-white font-black uppercase text-xs tracking-widest rounded h-12 flex items-center justify-center gap-2 hover:bg-green-800 transition shadow-lg px-4"
               >
-                <i className="fas fa-cart-plus"></i> ADD TO BASKET
+                <i className="fas fa-cart-plus"></i> AJOUTER AU PANIER
               </button>
             </div>
           </div>
 
-          <div className="bg-blue-50 p-4 rounded-md border border-blue-100">
-            <p className="text-sm text-blue-800 flex items-center gap-2">
-              <i className="fas fa-truck"></i> <strong>FREE Delivery</strong> on orders over £100
+          <div className="bg-green-50 p-4 rounded-md border border-green-100">
+            <p className="text-sm text-green-800 flex items-center gap-2">
+              <i className="fas fa-truck"></i> <strong>LIVRAISON GRATUITE</strong> dès 100.000 FCFA
             </p>
           </div>
 
@@ -163,10 +161,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
             <h4 className="font-bold text-gray-900 border-b pb-2">Description</h4>
             <p className="mt-4 leading-relaxed">{product.description}</p>
             <ul className="mt-4 space-y-1 list-disc pl-5">
-              <li>Reinforced seams for maximum longevity</li>
-              <li>Breathable fabric ensures all-day comfort</li>
-              <li>Utility pockets for tools and smartphones</li>
-              <li>Machine washable and easy iron</li>
+              <li>Origine 100% Cameroun garantie</li>
+              <li>Produits frais et séchés de qualité premium</li>
+              <li>Séchage traditionnel respectant les saveurs</li>
+              <li>Emballage hermétique pour une conservation longue durée</li>
             </ul>
           </div>
         </div>

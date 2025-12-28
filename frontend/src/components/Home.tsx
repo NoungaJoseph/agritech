@@ -38,10 +38,10 @@ const AutoProductSlider: React.FC<{
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="flex justify-between items-end border-b-4 border-green-700 pb-4 mb-8">
+      <div className="flex justify-between items-end border-b-2 md:border-b-4 border-green-700 pb-2 md:pb-4 mb-6 md:mb-8">
         <div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter text-gray-900">{title}</h2>
-          <div className="h-1 w-20 bg-green-700 mt-1"></div>
+          <h2 className="text-xl md:text-3xl font-black uppercase tracking-tighter text-gray-900">{title}</h2>
+          <div className="h-0.5 md:h-1 w-12 md:w-20 bg-green-700 mt-1"></div>
         </div>
         <button
           onClick={onViewAll}
@@ -144,12 +144,12 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
           <div key={idx} className={`absolute inset-0 transition-all duration-1000 transform ${idx === currentSlide ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-110 z-0'}`}>
             <img src={slide.url} className="w-full h-full object-cover opacity-70" alt={slide.title} />
             <div className="absolute inset-0 flex flex-col justify-center container mx-auto px-6 lg:px-12 text-white">
-              <span className="text-yellow-400 font-black tracking-[0.3em] text-xs mb-4 uppercase animate-pulse">Exclusivité Agri-Direct CMR</span>
-              <h2 className="text-5xl lg:text-8xl font-black uppercase mb-6 leading-none tracking-tighter max-w-4xl drop-shadow-2xl">{slide.title}</h2>
-              <p className="text-lg lg:text-2xl mb-10 opacity-90 max-w-xl font-medium leading-relaxed">{slide.sub}</p>
+              <span className="text-yellow-400 font-black tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs mb-3 md:mb-4 uppercase animate-pulse">Exclusivité Agri-Direct CMR</span>
+              <h2 className="text-3xl md:text-5xl lg:text-8xl font-black uppercase mb-4 md:mb-6 leading-none tracking-tighter max-w-4xl drop-shadow-2xl">{slide.title}</h2>
+              <p className="text-sm md:text-lg lg:text-2xl mb-6 md:mb-10 opacity-90 max-w-xl font-medium leading-relaxed">{slide.sub}</p>
               <button
                 onClick={() => onCategoryClick('Offres Spéciales')}
-                className="bg-green-700 text-white px-12 py-5 font-black uppercase text-xs tracking-[0.2em] hover:bg-white hover:text-green-700 transition-all w-fit shadow-2xl rounded-sm transform hover:scale-105 active:scale-95"
+                className="bg-green-700 text-white px-8 md:px-12 py-3 md:py-5 font-black uppercase text-[10px] md:text-xs tracking-[0.1em] md:tracking-[0.2em] hover:bg-white hover:text-green-700 transition-all w-fit shadow-2xl rounded-sm transform hover:scale-105 active:scale-95"
               >
                 DÉCOUVRIR LES PROMOS
               </button>
@@ -188,39 +188,39 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
       {/* Automatic Animated Product Sections */}
       <div className="space-y-4 py-8">
         <AutoProductSlider
-          title="Vêtements Agricoles"
-          category="Vêtements"
-          products={PRODUCTS.filter(p => p.category === 'Vêtements')}
+          title="Protéines & Poissons Secs"
+          category="Produits Halieutiques & Protéines"
+          products={PRODUCTS.filter(p => p.category === 'Produits Halieutiques & Protéines')}
           onViewProduct={onViewProduct}
           onAddToCart={onAddToCart}
-          onViewAll={() => onCategoryClick('Vêtements')}
+          onViewAll={() => onCategoryClick('Produits Halieutiques & Protéines')}
         />
 
         <AutoProductSlider
-          title="Chaussures de Sécurité"
-          category="Chaussures"
-          products={PRODUCTS.filter(p => p.category === 'Chaussures')}
+          title="Huiles & Beurre"
+          category="Huiles & Matières Grasses"
+          products={PRODUCTS.filter(p => p.category === 'Huiles & Matières Grasses')}
           onViewProduct={onViewProduct}
           onAddToCart={onAddToCart}
-          onViewAll={() => onCategoryClick('Chaussures')}
+          onViewAll={() => onCategoryClick('Huiles & Matières Grasses')}
         />
 
         <AutoProductSlider
-          title="Outils & Équipement"
-          category="Outils"
-          products={PRODUCTS.filter(p => p.category === 'Outils')}
+          title="Épices & Condiments"
+          category="Épices & Condiments Traditionnels"
+          products={PRODUCTS.filter(p => p.category === 'Épices & Condiments Traditionnels')}
           onViewProduct={onViewProduct}
           onAddToCart={onAddToCart}
-          onViewAll={() => onCategoryClick('Outils')}
+          onViewAll={() => onCategoryClick('Épices & Condiments Traditionnels')}
         />
 
         <AutoProductSlider
-          title="Alimentation Animale"
-          category="Alimentation"
-          products={PRODUCTS.filter(p => p.category === 'Alimentation')}
+          title="Produits de Base & Farines"
+          category="Produits de Base & Accompagnements"
+          products={PRODUCTS.filter(p => p.category === 'Produits de Base & Accompagnements')}
           onViewProduct={onViewProduct}
           onAddToCart={onAddToCart}
-          onViewAll={() => onCategoryClick('Alimentation')}
+          onViewAll={() => onCategoryClick('Produits de Base & Accompagnements')}
         />
       </div>
 
@@ -234,12 +234,12 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-700/10 rounded-full blur-3xl -ml-48 -mb-48"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6 md:gap-8">
             <div>
-              <span className="text-green-500 font-black tracking-widest text-xs uppercase mb-2 block">Témoignages</span>
-              <h2 className="text-4xl lg:text-5xl font-black uppercase leading-none">Ils nous font confiance</h2>
+              <span className="text-green-500 font-black tracking-widest text-[10px] md:text-xs uppercase mb-2 block">Témoignages</span>
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-black uppercase leading-none">Ils nous font confiance</h2>
             </div>
-            <button onClick={onSeeAllReviews} className="bg-white text-green-950 px-10 py-4 font-black uppercase text-[10px] tracking-widest hover:bg-green-500 hover:text-white transition-all rounded-sm shadow-xl">Voir les 30 avis</button>
+            <button onClick={onSeeAllReviews} className="bg-white text-green-950 px-8 md:px-10 py-3 md:py-4 font-black uppercase text-[9px] md:text-[10px] tracking-widest hover:bg-green-500 hover:text-white transition-all rounded-sm shadow-xl w-full md:w-auto">Voir les 30 avis</button>
           </div>
 
           <div className="relative overflow-hidden px-2">
@@ -248,13 +248,13 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
               style={{ transform: `translateX(-${reviewIndex * (100 / (window.innerWidth < 768 ? 1 : 3))}%)` }}
             >
               {REVIEWS.map((rev) => (
-                <div key={rev.id} className="min-w-[100%] md:min-w-[32%] bg-white/5 p-12 rounded-sm border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-colors backdrop-blur-sm">
+                <div key={rev.id} className="min-w-[100%] md:min-w-[32%] bg-white/5 p-6 md:p-12 rounded-sm border border-white/10 flex flex-col justify-between hover:bg-white/10 transition-colors backdrop-blur-sm">
                   <div>
-                    <i className="fas fa-quote-left text-4xl text-green-500 mb-6 opacity-40"></i>
-                    <div className="flex text-yellow-400 mb-6 gap-1">
-                      {[...Array(5)].map((_, i) => <i key={i} className={`fas fa-star text-sm ${i < rev.rating ? '' : 'text-white/20'}`}></i>)}
+                    <i className="fas fa-quote-left text-2xl md:text-4xl text-green-500 mb-4 md:mb-6 opacity-40"></i>
+                    <div className="flex text-yellow-400 mb-4 md:mb-6 gap-1">
+                      {[...Array(5)].map((_, i) => <i key={i} className={`fas fa-star text-xs md:text-sm ${i < rev.rating ? '' : 'text-white/20'}`}></i>)}
                     </div>
-                    <p className="text-gray-100 italic mb-10 leading-relaxed text-lg font-medium">"{rev.comment}"</p>
+                    <p className="text-gray-100 italic mb-6 md:mb-10 leading-relaxed text-base md:text-lg font-medium">"{rev.comment}"</p>
                   </div>
                   <div className="flex justify-between items-center border-t border-white/10 pt-8">
                     <div className="flex items-center gap-4">

@@ -6,9 +6,10 @@ import { FilterState } from '../types';
 interface SidebarFiltersProps {
   filters: FilterState;
   onFilterChange: (newFilters: FilterState) => void;
+  onClose?: () => void;
 }
 
-const SidebarFilters: React.FC<SidebarFiltersProps> = ({ filters, onFilterChange }) => {
+const SidebarFilters: React.FC<SidebarFiltersProps> = ({ filters, onFilterChange, onClose }) => {
   const toggleFilter = (type: keyof FilterState, value: string) => {
     const current = filters[type] as string[];
     const updated = current.includes(value)
@@ -19,14 +20,21 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({ filters, onFilterChange
 
   return (
     <div className="w-full lg:w-64 space-y-6">
-      <div className="bg-white p-4 border rounded-md shadow-sm">
-        <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-          <i className="fas fa-filter text-green-700"></i> Filters
+      <div className="bg-white p-4 border rounded-md shadow-sm h-full overflow-y-auto lg:h-auto">
+        <div className="flex justify-between items-center mb-6 lg:hidden border-b pb-4">
+          <h3 className="font-black text-xl uppercase tracking-tighter text-green-700 font-sans">Filtres</h3>
+          <button onClick={onClose} className="p-2 text-gray-500 hover:text-green-700 transition-colors">
+            <i className="fas fa-times text-2xl"></i>
+          </button>
+        </div>
+
+        <h3 className="font-bold text-lg mb-4 hidden lg:flex items-center gap-2 border-b-2 border-green-700 pb-2">
+          <i className="fas fa-filter text-green-700"></i> Filtres
         </h3>
 
         {/* Brand Filter */}
         <div className="mb-6">
-          <h4 className="font-bold text-sm text-gray-600 uppercase mb-3 border-b pb-1">Brand</h4>
+          <h4 className="font-bold text-sm text-gray-600 uppercase mb-3 border-b pb-1">Marque</h4>
           <div className="space-y-2">
             {BRANDS.map(brand => (
               <label key={brand} className="flex items-center gap-2 cursor-pointer group">
@@ -44,17 +52,16 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({ filters, onFilterChange
 
         {/* Size Filter */}
         <div className="mb-6">
-          <h4 className="font-bold text-sm text-gray-600 uppercase mb-3 border-b pb-1">Size</h4>
+          <h4 className="font-bold text-sm text-gray-600 uppercase mb-3 border-b pb-1">Poids / Format</h4>
           <div className="grid grid-cols-3 gap-2">
             {SIZES.map(size => (
               <button
                 key={size}
                 onClick={() => toggleFilter('sizes', size)}
-                className={`text-xs py-2 px-1 rounded border transition ${
-                  filters.sizes.includes(size)
-                    ? 'bg-green-700 text-white border-green-700'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-green-700'
-                }`}
+                className={`text-xs py-2 px-1 rounded border transition ${filters.sizes.includes(size)
+                  ? 'bg-green-700 text-white border-green-700'
+                  : 'bg-white text-gray-600 border-gray-200 hover:border-green-700'
+                  }`}
               >
                 {size}
               </button>
@@ -64,7 +71,7 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({ filters, onFilterChange
 
         {/* Color Filter */}
         <div className="mb-6">
-          <h4 className="font-bold text-sm text-gray-600 uppercase mb-3 border-b pb-1">Color</h4>
+          <h4 className="font-bold text-sm text-gray-600 uppercase mb-3 border-b pb-1">Variété</h4>
           <div className="space-y-2">
             {COLORS.map(color => (
               <label key={color} className="flex items-center gap-2 cursor-pointer group">
@@ -82,23 +89,26 @@ const SidebarFilters: React.FC<SidebarFiltersProps> = ({ filters, onFilterChange
 
         {/* Clear Button */}
         <button
-          onClick={() => onFilterChange({ brands: [], priceRange: [0, 1000], sizes: [], colors: [] })}
-          className="w-full py-2 text-sm text-green-700 font-bold hover:bg-green-50 border border-green-700 rounded transition"
+          onClick={() => {
+            onFilterChange({ brands: [], priceRange: [0, 1000000], sizes: [], colors: [] });
+            onClose?.();
+          }}
+          className="w-full py-3 text-xs uppercase font-black text-green-700 hover:bg-green-50 border-2 border-green-700 rounded transition mt-4"
         >
-          Clear All Filters
+          Effacer les filtres
         </button>
       </div>
 
       {/* Promotional Banner */}
-      <div className="bg-green-700 text-white p-6 rounded-md shadow-sm relative overflow-hidden group">
+      <div className="hidden lg:block bg-green-700 text-white p-6 rounded-md shadow-sm relative overflow-hidden group">
         <div className="relative z-10">
-          <p className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">New Season</p>
-          <h4 className="text-xl font-bold mb-4">Waterproof Excellence</h4>
+          <p className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">Nouvelle Arrivée</p>
+          <h4 className="text-xl font-bold mb-4">Poivre de Penja Authentique</h4>
           <button className="bg-white text-green-700 px-4 py-2 rounded font-bold text-sm hover:bg-gray-100 transition">
-            Shop Fortress
+            Acheter maintenant
           </button>
         </div>
-        <i className="fas fa-cloud-showers-heavy absolute -right-4 -bottom-4 text-7xl opacity-10 group-hover:scale-110 transition duration-500"></i>
+        <i className="fas fa-leaf absolute -right-4 -bottom-4 text-7xl opacity-10 group-hover:scale-110 transition duration-500"></i>
       </div>
     </div>
   );

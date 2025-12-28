@@ -1,0 +1,10 @@
+/* Basic styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f9fafb;
+}
+
+#root {
+  min-height: 100vh;
+}
