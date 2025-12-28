@@ -24,11 +24,11 @@ const AutoProductSlider: React.FC<{
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only auto-slide on desktop
-    if (products.length <= 4 || isPaused || window.innerWidth < 768) return;
+    // Auto-slide on all devices - show 3-4 items at a time
+    if (products.length <= 4 || isPaused) return;
     const timer = setInterval(() => {
-      setStartIndex(prev => (prev + 1) % (products.length - 3));
-    }, 3000);
+      setStartIndex(prev => (prev + 1) % (products.length - 2));
+    }, 3500);
     return () => clearInterval(timer);
   }, [products.length, isPaused]);
 
@@ -51,20 +51,17 @@ const AutoProductSlider: React.FC<{
         </button>
       </div>
 
-      <div className="relative">
-        {/* Mobile: Horizontal Scroll | Desktop: Animated Transform */}
+      <div className="relative overflow-hidden">
+        {/* Auto-rotating slider showing 3-4 items */}
         <div
           ref={sliderRef}
-          className={`flex gap-4 md:gap-6 no-scrollbar ${window.innerWidth < 768
-            ? 'overflow-x-auto snap-x snap-mandatory pb-4'
-            : 'transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1)'
-            }`}
-          style={window.innerWidth >= 768 ? { transform: `translateX(-${startIndex * (100 / 4.2)}%)` } : {}}
+          className="flex gap-4 md:gap-6 transition-transform duration-1000 ease-in-out"
+          style={{ transform: `translateX(-${startIndex * (100 / 4)}%)` }}
         >
           {products.map(p => (
             <div
               key={p.id}
-              className="min-w-[85%] md:min-w-[45%] lg:min-w-[23.5%] snap-center animate-fade-in-up"
+              className="min-w-[30%] sm:min-w-[30%] md:min-w-[30%] lg:min-w-[24%] animate-fade-in-up"
             >
               <ProductCard
                 product={p}

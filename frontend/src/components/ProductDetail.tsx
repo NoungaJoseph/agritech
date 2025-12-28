@@ -13,6 +13,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || '');
   const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || '');
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(product.image);
+
+  // Create array of all images (main + gallery)
+  const allImages = [product.image, ...(product.gallery || [])];
 
   const handleAddToCart = () => {
     onAddToCart({
@@ -36,15 +40,22 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
         {/* Gallery */}
         <div className="space-y-4">
           <div className="aspect-[4/5] rounded-lg overflow-hidden border">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+            <img src={selectedImage} alt={product.name} className="w-full h-full object-cover" />
           </div>
-          <div className="grid grid-cols-4 gap-2">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="aspect-square border rounded cursor-pointer hover:border-green-700">
-                <img src={`https://picsum.photos/seed/${product.id + i}/200`} className="w-full h-full object-cover rounded" alt={`Gallery ${i}`} />
-              </div>
-            ))}
-          </div>
+          {/* Thumbnail Gallery */}
+          {allImages.length > 1 && (
+            <div className={`grid gap-2 ${allImages.length === 2 ? 'grid-cols-2' : allImages.length === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}>
+              {allImages.map((img, i) => (
+                <div
+                  key={i}
+                  onClick={() => setSelectedImage(img)}
+                  className={`aspect-square border-2 rounded cursor-pointer transition-all hover:border-green-700 ${selectedImage === img ? 'border-green-700 ring-2 ring-green-200' : 'border-gray-200'}`}
+                >
+                  <img src={img} className="w-full h-full object-cover rounded" alt={`${product.name} ${i + 1}`} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Info */}
@@ -89,8 +100,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`min-w-[48px] h-10 border rounded flex items-center justify-center font-bold text-sm transition ${selectedSize === size
-                          ? 'bg-green-700 text-white border-green-700'
-                          : 'bg-white text-gray-700 hover:border-green-700'
+                        ? 'bg-green-700 text-white border-green-700'
+                        : 'bg-white text-gray-700 hover:border-green-700'
                         }`}
                     >
                       {size}
@@ -110,8 +121,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onAddToCart, onB
                       key={color}
                       onClick={() => setSelectedColor(color)}
                       className={`px-4 h-10 border rounded flex items-center justify-center font-bold text-sm transition ${selectedColor === color
-                          ? 'bg-green-700 text-white border-green-700'
-                          : 'bg-white text-gray-700 hover:border-green-700'
+                        ? 'bg-green-700 text-white border-green-700'
+                        : 'bg-white text-gray-700 hover:border-green-700'
                         }`}
                     >
                       {color}

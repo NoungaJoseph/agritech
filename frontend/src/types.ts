@@ -6,6 +6,7 @@ export interface Product {
   price: number;
   originalPrice?: number;
   image: string;
+  gallery?: string[]; // Supplement images for product detail view
   brand: string;
   rating: number;
   reviewCount: number;
