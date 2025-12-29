@@ -39,7 +39,7 @@ const Footer: React.FC<FooterProps> = ({ onAboutClick, onContactClick, onBlogCli
               </li>
               <li className="flex gap-3">
                 <i className="fas fa-phone text-green-500 mt-1"></i>
-                <span>+237 6XX XX XX XX</span>
+                <span>+237 654 228 898</span>
               </li>
             </ul>
           </div>
@@ -48,22 +48,27 @@ const Footer: React.FC<FooterProps> = ({ onAboutClick, onContactClick, onBlogCli
             <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider">Paiement Mobile</h4>
             <p className="text-sm mb-4">Payez en toute sécurité avec vos opérateurs locaux.</p>
             <div className="flex gap-4">
-               <div className="bg-white p-2 rounded shadow-sm flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all cursor-pointer">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Orange-logo.svg" alt="Orange" className="w-8" />
-               </div>
-               <div className="bg-yellow-400 p-2 rounded shadow-sm flex items-center justify-center w-12 h-12 grayscale hover:grayscale-0 transition-all cursor-pointer">
-                  <span className="font-black text-xs text-black">MTN</span>
-               </div>
+              <div className="bg-orange-500 p-3 rounded shadow-sm flex items-center justify-center w-14 h-14 hover:bg-orange-600 transition-all cursor-pointer">
+                <span className="font-black text-lg text-white">OM</span>
+              </div>
+              <div className="bg-yellow-400 p-3 rounded shadow-sm flex items-center justify-center w-14 h-14 hover:bg-yellow-500 transition-all cursor-pointer">
+                <span className="font-black text-lg text-black">MoMo</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
           <p>© 2025 Agri-Direct Cameroon. Tous droits réservés.</p>
-          <div className="flex gap-4 opacity-50">
-            <i className="fab fa-facebook text-xl hover:text-white transition cursor-pointer"></i>
-            <i className="fab fa-whatsapp text-xl hover:text-white transition cursor-pointer"></i>
-            <i className="fab fa-instagram text-xl hover:text-white transition cursor-pointer"></i>
+          <div className="flex gap-6 items-center">
+            <a href="mailto:ballahlindamaiyeh@gmail.com" className="hover:text-green-500 transition">
+              <i className="fas fa-envelope mr-2"></i>ballahlindamaiyeh@gmail.com
+            </a>
+            <div className="flex gap-4 opacity-50">
+              <i className="fab fa-facebook text-xl hover:text-white transition cursor-pointer"></i>
+              <i className="fab fa-whatsapp text-xl hover:text-white transition cursor-pointer"></i>
+              <i className="fab fa-instagram text-xl hover:text-white transition cursor-pointer"></i>
+            </div>
           </div>
         </div>
       </div>

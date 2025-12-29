@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onCartClick, onLogoClick, on
             <span className="flex items-center gap-1.5 hover:text-green-300 cursor-pointer"><i className="fas fa-check-circle"></i> Support Expert 24/7</span>
           </div>
           <div className="flex gap-6 items-center">
-            <span className="flex items-center gap-1.5"><i className="fas fa-phone-alt"></i> Commandez: <span className="text-yellow-400">+237 6XX XX XX XX</span></span>
+            <span className="flex items-center gap-1.5"><i className="fas fa-phone-alt"></i> Commandez: <span className="text-yellow-400">+237 654 228 898</span></span>
           </div>
         </div>
       </div>
@@ -184,10 +184,10 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onCartClick, onLogoClick, on
 
             <div className="mt-auto p-6 bg-gray-50 border-t space-y-4">
               <div className="flex items-center gap-3 text-xs font-bold text-gray-600">
-                <i className="fas fa-phone-alt text-green-700"></i> +237 6XX XX XX XX
+                <i className="fas fa-phone-alt text-green-700"></i> +237 654 228 898
               </div>
               <div className="flex items-center gap-3 text-xs font-bold text-gray-600">
-                <i className="fas fa-envelope text-green-700"></i> contact@agridirect.cm
+                <i className="fas fa-envelope text-green-700"></i> ballahlindamaiyeh@gmail.com
               </div>
             </div>
           </div>

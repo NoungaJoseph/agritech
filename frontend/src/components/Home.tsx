@@ -61,7 +61,7 @@ const AutoProductSlider: React.FC<{
           {products.map(p => (
             <div
               key={p.id}
-              className="min-w-[30%] sm:min-w-[30%] md:min-w-[30%] lg:min-w-[24%] animate-fade-in-up"
+              className="min-w-[85%] sm:min-w-[48%] md:min-w-[30%] lg:min-w-[24%] animate-fade-in-up"
             >
               <ProductCard
                 product={p}
@@ -88,42 +88,12 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
   ];
 
   const PARTNERS = [
-    {
-      name: 'GIC SOH',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/4/47/Logo_Cameroun.png', // Fallback to symbolic if direct URL fails
-      color: 'bg-red-50',
-      tag: 'Céréales'
-    },
-    {
-      name: 'UNION PROD',
-      logo: 'https://api.dicebear.com/7.x/initials/svg?seed=UP&backgroundColor=1d4ed8',
-      color: 'bg-blue-50',
-      tag: 'Coopérative'
-    },
-    {
-      name: 'CAMAGRI',
-      logo: 'https://api.dicebear.com/7.x/initials/svg?seed=CA&backgroundColor=15803d',
-      color: 'bg-green-50',
-      tag: 'Distribution'
-    },
-    {
-      name: 'WEST FARMERS',
-      logo: 'https://api.dicebear.com/7.x/initials/svg?seed=WF&backgroundColor=c2410c',
-      color: 'bg-orange-50',
-      tag: 'Culture'
-    },
-    {
-      name: 'SAVANNA COOP',
-      logo: 'https://api.dicebear.com/7.x/initials/svg?seed=SC&backgroundColor=92400e',
-      color: 'bg-amber-50',
-      tag: 'Nord'
-    },
-    {
-      name: 'LITTORAL AGRI',
-      logo: 'https://api.dicebear.com/7.x/initials/svg?seed=LA&backgroundColor=0369a1',
-      color: 'bg-cyan-50',
-      tag: 'Export'
-    }
+    { name: 'GIC SOH', color: 'text-emerald-600', tag: 'Céréales' },
+    { name: 'UNION PROD', color: 'text-blue-600', tag: 'Coopérative' },
+    { name: 'CAMAGRI', color: 'text-purple-600', tag: 'Distribution' },
+    { name: 'WEST FARMERS', color: 'text-orange-600', tag: 'Culture' },
+    { name: 'SAVANNA COOP', color: 'text-rose-600', tag: 'Nord' },
+    { name: 'LITTORAL AGRI', color: 'text-teal-600', tag: 'Export' }
   ];
 
   // Auto Hero Slider - 5 seconds
@@ -344,16 +314,13 @@ const Home: React.FC<HomeProps> = ({ onViewProduct, onAddToCart, onSeeAllReviews
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {PARTNERS.map(partner => (
             <div key={partner.name} className="group relative flex flex-col items-center bg-white border border-gray-100 p-8 hover:border-green-700 transition-all duration-500 hover:shadow-2xl">
-              <div className={`w-24 h-24 relative overflow-hidden flex items-center justify-center mb-6 rounded-lg ${partner.color} transition-colors group-hover:bg-white`}>
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="w-16 h-16 object-contain filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-500"
-                />
-              </div>
-              <div className="text-center">
-                <p className="text-xs font-black uppercase tracking-widest text-gray-900 mb-1">{partner.name}</p>
-                <span className="text-[9px] font-bold text-green-700 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Partenaire {partner.tag}</span>
+              <div className="text-center space-y-3">
+                <p className={`text-2xl md:text-3xl font-black uppercase tracking-tight ${partner.color} transform group-hover:scale-110 transition-transform duration-500`} style={{ fontFamily: "'Playfair Display', serif" }}>
+                  {partner.name}
+                </p>
+                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block opacity-70 group-hover:text-green-700 group-hover:opacity-100 transition-all">
+                  {partner.tag}
+                </span>
               </div>
             </div>
           ))}

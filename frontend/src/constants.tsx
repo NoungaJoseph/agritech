@@ -297,20 +297,6 @@ export const PRODUCTS: Product[] = [
         inStock: true,
         sizes: ['250g', '500g']
     },
-    {
-        id: 's2',
-        name: 'Mix Épices Mbongo',
-        sku: 'SPI-002',
-        price: 1200,
-        image: '/images/cat-spices.jpg',
-        brand: 'Tradition Plus',
-        rating: 4.7,
-        reviewCount: 65,
-        description: 'Mélange traditionnel brûlé pour la sauce noire Mbongo Tchobi.',
-        category: 'Épices & Condiments Traditionnels',
-        inStock: true,
-        sizes: ['100g', '250g']
-    },
     // Staples
     {
         id: 'st1',
